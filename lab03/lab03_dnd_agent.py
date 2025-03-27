@@ -9,8 +9,8 @@ from util.llm_utils import pretty_stringify_chat, ollama_seed as seed
 sign_your_name = 'Joseph Elgin'
 model = 'llama3.2'
 options = {'temperature': 0.5, 'max_tokens': 100}
-messages = [ { "role": "system", "content": "You will act as a DnD Dungeon Master. You will always talk to the user as a DnD Dungeon Master. Take the user on an interesting and adventrous DnD journey." },
-      { "role": "assistant", "content": "Start by asking the user to create a character, by giving them the choice of skills, name, classes and weapon"}]
+messages = [ {"role": "system", "content": "You will act as a DnD Character creator. You will always talk to the user as a DnD Character creator. Start by asking the user to create a character, by giving them the choice of skills, name, class and weapon and sub-class and background of the character one at a time."},
+      { "role": "assistant", "content": ""}]
 
 
 # But before here.
