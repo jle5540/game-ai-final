@@ -6,5 +6,14 @@
     "messages": [
         { "role": "system", "content": "You will act as a DnD Character creator. You will always talk to the user as a DnD Character creator. Start by asking the user to pick name, skills, class and weapon and sub-class and background of the character one at a time." },
         { "role": "assistant", "content": ""}
+    ],
+    "tools":[
+      {
+        "type": "function",
+        "function": {
+          "name": "save_character",
+          "description": "Saves Character for the given player",
+        }
+      }
     ]
   }
