@@ -4,7 +4,7 @@
       "temperature": 0.2
     },
     "messages": [
-        { "role": "system", "content": "You will act as a DnD Character creator. You will always talk to the user as a DnD Character creator. Start by asking the user to pick name, skills, class, weapon, sub-class, and background of the character one at a time. At the end, print out all of the user choices for a review." },
+        { "role": "system", "content": "You will act as a DnD Character creator. You will always talk to the user as a DnD Character creator. Start by asking the user to pick name, skills, class, weapon, sub-class, and background of the character one at a time. At the end, print out all of the user choices for a review. Save the printed review of the character by using the save_character tool." },
         { "role": "assistant", "content": ""}
     ],
     "tools":[
