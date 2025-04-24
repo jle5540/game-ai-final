@@ -1,12 +1,18 @@
 from dndnetwork import DungeonMasterServer, PlayerClient
 from llm_utils import TemplateChat
+import json
 
 
 class DungeonMaster:
     def __init__(self):
         self.game_log = ['START']
         self.server = DungeonMasterServer(self.game_log, self.dm_turn_hook)
-        self.chat = TemplateChat.from_file('util/templates/dm_chat.json', sign='hello')
+        with open('character.json', 'r') as openfile:
+            json_object = json.load(openfile)
+        if not json_object:
+            self.chat = TemplateChat.from_file('util/templates/character_creator.json', sign='hello')
+        else:
+            self.chat = TemplateChat.from_file('util/templates/dm_chat.json', sign='hello')
         self.start = True
 
     def start_server(self):

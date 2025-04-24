@@ -50,6 +50,12 @@ def run_console_chat(**kwargs):
                 print('Ending match:', ending_match)
             break
 
+def process_function_call(function_call):
+    name = function_call.name
+    args = function_call.arguments
+
+    return globals()[name](**args)
+
 class TemplateChat:
     def __init__(self, template, sign=None, **kwargs):
         self.instance = template
@@ -81,12 +87,28 @@ class TemplateChat:
         logging.info(f'{message.role}: {message.content}')
         return response 
 
+    def save_character(self):
+        dictionary = {
+            "character" : self.messages[-1]
+        }
+        
+        with open("character.json", 'w') as outfile:
+            json.dump(dictionary, outfile)
+
+        run_console_chat('./templates/dm_chat.json')
+
     def _chat_generator_func(self):
         while True:
             response = self.chat_turn()
 
             response = self.process_response(response)
-
+            if response.message.tool_calls:
+                response.messages.append({'role': 'tool',
+                    'name': response.message.tool_calls[0].function.name, 
+                    'arguments': response.message.tool_calls[0].function.arguments,
+                    'content': process_function_call(response.message.tool_calls[0].function)
+                })
+                response = response.completion()
             if self.end_regex:
                 if match:=re.search(self.end_regex, response.message.content, re.DOTALL):
                     return response.message.content, match.group(1).strip()

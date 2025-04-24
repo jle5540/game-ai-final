@@ -12,7 +12,11 @@
         "type": "function",
         "function": {
           "name": "save_character",
-          "description": "Saves Character for the given player"
+          "description": "Saves Character for the given player",
+          "parameters": {
+              "type": "object",
+              "properties": {"self": {"type": "object"}}
+          }
         }
       }
     ]
