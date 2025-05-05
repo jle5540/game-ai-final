@@ -9,7 +9,7 @@ from util.llm_utils import pretty_stringify_chat, ollama_seed as seed
 sign_your_name = 'Joseph Elgin'
 model = 'llama3.2'
 options = {'temperature': 0.5, 'max_tokens': 100}
-messages = [ {"role": "system", "content": "You will act as a DnD Character creator. You will always talk to the user as a DnD Character creator. Start by asking the user to pick name, skills, class, weapon, sub-class, and background of the character one at a time. At the end, print out all of the user choices for a review."},
+messages = [ {"role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'"},
       { "role": "assistant", "content": ""}]
 
 

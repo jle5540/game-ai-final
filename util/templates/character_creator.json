@@ -1,11 +1,11 @@
 {
     "model": "llama3.2",
     "options": {
-      "temperature": 0.2
+      "temperature": 0.2,
+      "max_tokens": 100
     },
     "messages": [
-        { "role": "system", "content": "You will act as a DnD Character creator. You will always talk to the user as a DnD Character creator. Start by asking the user to pick name, skills, class, weapon, sub-class, and background of the character one at a time. At the end, print out all of the user choices for a review. Save the printed review of the character by using the save_character tool." },
-        { "role": "assistant", "content": ""}
+        { "role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character. Use the save_character tool to store the final choices. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'" }
     ],
     "tools":[
       {
@@ -15,7 +15,13 @@
           "description": "Saves Character for the given player",
           "parameters": {
               "type": "object",
-              "properties": {"self": {"type": "object"}}
+              "properties": {
+                "response": {
+                  "type": "string",
+                  "description": "JSON-formatted character details including name, skills, class, weapon, sub-class, and background"
+                }
+              },
+              "required": ["response"]
           }
         }
       }

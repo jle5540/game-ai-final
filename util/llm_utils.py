@@ -50,10 +50,10 @@ def run_console_chat(**kwargs):
                 print('Ending match:', ending_match)
             break
 
+@tool_tracker
 def process_function_call(function_call):
     name = function_call.name
     args = function_call.arguments
-
     return globals()[name](**args)
 
 class TemplateChat:
@@ -102,8 +102,8 @@ class TemplateChat:
             response = self.chat_turn()
 
             response = self.process_response(response)
-            if response.message.tool_calls:
-                response.messages.append({'role': 'tool',
+            if self.messages[-1] == 'done':
+                self.messages.append({'role': 'tool',
                     'name': response.message.tool_calls[0].function.name, 
                     'arguments': response.message.tool_calls[0].function.arguments,
                     'content': process_function_call(response.message.tool_calls[0].function)
