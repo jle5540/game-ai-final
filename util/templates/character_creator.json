@@ -1,11 +1,11 @@
 {
     "model": "llama3.2",
     "options": {
-      "temperature": 0.2,
+      "temperature": 0.7,
       "max_tokens": 100
     },
     "messages": [
-        { "role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character. Use the save_character tool to store the final choices. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'" }
+        { "role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character. Use the save_character tool only when prompted by the user to store the final choices. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'" }
     ],
     "tools":[
       {
