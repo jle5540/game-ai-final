@@ -1,11 +1,12 @@
 {
     "model": "llama3.2",
     "options": {
-      "temperature": 0.7,
+      "temperature": 0.2,
       "max_tokens": 100
     },
     "messages": [
-        { "role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character. Use the save_character tool only when prompted by the user to store the final choices. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'" }
+        { "role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character and then invoke the tool call for the save_character function. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'" },
+        { "role": "assistant", "content": ""}
     ],
     "tools":[
       {
@@ -16,14 +17,15 @@
           "parameters": {
               "type": "object",
               "properties": {
-                "response": {
-                  "type": "string",
-                  "description": "JSON-formatted character details including name, skills, class, weapon, sub-class, and background"
-                }
-              },
-              "required": ["response"]
+                "name": {"type": "string"},
+                "skills": {"type": "string"},
+                "class": {"type": "string"},
+                "weapon": {"type": "string"},
+                "subclass": {"type": "string"},
+                "background": {"type": "string"}
+              }
           }
         }
       }
     ]
-  }
+}

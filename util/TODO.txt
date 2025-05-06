@@ -1,9 +1,0 @@
-Team:
-    Find a way to switch between the character creator and the dm chat.
-
-Hayden:
-    Create a tool that will be called at the end of the character creation.
-    This tool will be used to save the character that was created.
-
-Joe:
-    Fix and make sure that the character creator template works.

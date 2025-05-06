@@ -40,7 +40,7 @@ def run_console_chat(**kwargs):
     chat = TemplateChat.from_file(**kwargs)
     message = chat.start_chat()
     while True:
-        print('Agent:', message)
+        logging.info(f'Agent: {message}')
         try:
             message = chat.send(input('You: '))
         except StopIteration as e:
@@ -50,10 +50,10 @@ def run_console_chat(**kwargs):
                 print('Ending match:', ending_match)
             break
 
-@tool_tracker
 def process_function_call(function_call):
     name = function_call.name
     args = function_call.arguments
+    logging.info(f'Processing function call: {name} with arguments: {args}')
     return globals()[name](**args)
 
 class TemplateChat:
@@ -100,22 +100,22 @@ class TemplateChat:
     def _chat_generator_func(self):
         while True:
             response = self.chat_turn()
-
             response = self.process_response(response)
-            if self.messages[-1] == 'done':
-                self.messages.append({'role': 'tool',
-                    'name': response.message.tool_calls[0].function.name, 
-                    'arguments': response.message.tool_calls[0].function.arguments,
-                    'content': process_function_call(response.message.tool_calls[0].function)
-                })
-                response = response.completion()
             if self.end_regex:
                 if match:=re.search(self.end_regex, response.message.content, re.DOTALL):
                     return response.message.content, match.group(1).strip()
-
+                
+            if self.messages[-1]['role'] == 'user' and self.messages[-1]['content'].strip().lower() == 'done':
+                tool_call = response.message.tool_calls[0].function
+                self.messages.append({
+                    'role': 'tool',
+                    'name': tool_call.name,
+                    'arguments': tool_call.arguments,
+                    'content': process_function_call(tool_call)
+                })
+                response = self.completion()
             prompt = yield response.message.content
 
-            logging.info(f'User: {prompt}')
             self.messages.append({'role': 'user', 'content': prompt})
             if prompt == '/exit':
                 break

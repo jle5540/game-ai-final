@@ -1,10 +1,31 @@
 {
   "model": "llama3.2",
   "options": {
-    "temperature": 1,
+    "temperature": 0.2,
     "max_tokens": 100
   },
   "messages": [
-      { "role": "system", "content": "You will act like a DnD Trader who will be trading {{inventory}} for only this exact amount of {{amount}} gold coins. You will always have enough {{inventory}} for what the user wants. The user will start with {{coins}} gold coins and will try to buy from you. Once you accept the trade you will respond by saying 'DONE, {{boughtItems}}' and do not capitalize {{boughtItems}} and list all {{boughtItems}} in JSON format. For example: 'DONE, [\"item\", \"item\", \"item\", \"item\", \"item\", \"item\",\"item\", \"item\", \"item\", \"item\", \"item\", \"item\"]'"}
+      { "role": "system", "content": "You are a DnD character creator. Guide the user to select a name, skills, class, weapon, sub-class, and background step by step. Once all choices are made, prompt them to enter 'done' and present a JSON-formatted review of their character and then invoke the tool call for the save_character function. For example: '[\"name\", \"skills\", \"class\", \"weapon\", \"sub-class\", \"background\"]'" },
+      { "role": "assistant", "content": ""}
+  ],
+  "tools":[
+    {
+      "type": "function",
+      "function": {
+        "name": "save_character",
+        "description": "Saves Character for the given player",
+        "parameters": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "skills": {"type": "string"},
+              "class": {"type": "string"},
+              "weapon": {"type": "string"},
+              "subclass": {"type": "string"},
+              "background": {"type": "string"}
+            }
+        }
+      }
+    }
   ]
 }
